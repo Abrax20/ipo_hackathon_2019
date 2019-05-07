@@ -4,3 +4,7 @@ export const padding = {
   large: '16px',
   xlarge: '24px',
 };
+export const colors = {
+  white: '#FFFFFF',
+  success: '#6FFFB0'
+};

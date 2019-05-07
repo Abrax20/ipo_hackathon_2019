@@ -11,13 +11,13 @@ const Container = styled.div`
 `;
 const Content = styled.div`
   flex: 1;
-  padding: 0 ${padding.medium};
+  padding: ${padding.large} ${padding.medium};
 `;
 
 
-export const PageWrapper = ({ children }) => (
+export const PageWrapper = ({ index, children }) => (
   <Container>
-    <Sidebar />
+    <Sidebar index={index} />
     <Content>
       { children }
     </Content>
