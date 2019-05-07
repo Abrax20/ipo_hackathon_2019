@@ -6,5 +6,6 @@ export const padding = {
 };
 export const colors = {
   white: '#FFFFFF',
-  success: '#6FFFB0'
+  green: '#79E880',
+  success: '#6FFFB0',
 };

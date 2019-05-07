@@ -8,7 +8,7 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
   padding: ${padding.medium} 0;
-  background-color: ${colors.success};
+  background-color: ${colors.green};
 `;
 export const Item = styled.div`
   width: 50px;
