@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container } from './styled';
+import PageWrapper from './../../components/PageWrapper/PageWrapper';
 
-export const Company = () => <Container>Hello World</Container>;
+export const Company = () => <PageWrapper>Welcome</PageWrapper>;
 export default Company;
