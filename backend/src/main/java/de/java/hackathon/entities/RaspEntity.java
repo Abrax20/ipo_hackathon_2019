@@ -5,12 +5,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "test_one")
-public class TestOneEntity {
+public class RaspEntity {
 
     @Id
     private Integer id;
     private String title;
     private String progress;
+    private String status;
 
     public Integer getId() {
         return id;
@@ -34,5 +35,11 @@ public class TestOneEntity {
 
     public void setProgress(String progress) {
         this.progress = progress;
+    }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

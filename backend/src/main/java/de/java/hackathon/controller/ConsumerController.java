@@ -1,8 +1,8 @@
 package de.java.hackathon.controller;
 
 import de.java.hackathon.entities.ConsumerRepo;
-import de.java.hackathon.entities.TestOneEntity;
-import de.java.hackathon.entities.TestOneRepo;
+import de.java.hackathon.entities.RaspEntity;
+import de.java.hackathon.entities.RaspRepo;
 import de.java.hackathon.model.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ public class ConsumerController {
     @Autowired
     private ConsumerRepo consumerRepo;
     @Autowired
-    private TestOneRepo testOneRepo;
+    private RaspRepo raspRepo;
     @Autowired
     private WebSocketController webSocketController;
     private static final String template = "Hello, %s!";
@@ -39,14 +39,14 @@ public class ConsumerController {
 
     @GetMapping(path = "/all")
     public @ResponseBody
-    Iterable<TestOneEntity> getAllUsers() {
-        return testOneRepo.findAll();
+    Iterable<RaspEntity> getAllUsers() {
+        return raspRepo.findAll();
     }
 
     @GetMapping(path = "/search/{id}")
     @ResponseBody
-    public TestOneEntity single(@PathVariable int id) {
-        TestOneEntity entity = testOneRepo.findById(id)
+    public RaspEntity single(@PathVariable int id) {
+        RaspEntity entity = raspRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + id));
 
         webSocketController.oneReceivedMessage(entity.toString());
