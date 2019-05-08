@@ -1,5 +1,6 @@
 import thunk from "redux-thunk";
 import logger from "redux-logger";
+import setupSocket from "./socket";
 import rootReducer from "./reducer";
 import fetch from "./middlewares/fetch";
 import { createStore, applyMiddleware } from "redux";
@@ -19,4 +20,7 @@ export const store = createStore(
   initialState,
   applyMiddleware(...middleware)
 );
+
+setupSocket(store);
+
 export default store;

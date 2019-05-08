@@ -21,7 +21,7 @@ export class ProcessOverview extends Component {
     const { title, progress } = this.props.process || {};
     return (
       <PageWrapper>
-        <Header>{title}</Header>
+        <Header>{title || "None"}</Header>
         <Content>
           <ProgressBar value={progress} />
         </Content>

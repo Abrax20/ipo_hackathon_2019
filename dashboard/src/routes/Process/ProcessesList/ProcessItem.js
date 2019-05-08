@@ -10,7 +10,7 @@ const Container = styled.div`
 
 export const ProcessItem = ({ proccess }) => (
   <Container>
-    <Title>{proccess.title}</Title>
+    <Title>{proccess.title || "None"}</Title>
     <ProgressBar value={proccess.progress} />
   </Container>
 );
