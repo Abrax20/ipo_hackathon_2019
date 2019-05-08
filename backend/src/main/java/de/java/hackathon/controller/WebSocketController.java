@@ -19,6 +19,6 @@ public class WebSocketController {
     @MessageMapping("/send/message")
     public void oneReceivedMessage(String msg) {
         this.template
-                .convertAndSend("/chat", msg);
+                .convertAndSend("/progress", msg);
     }
 }

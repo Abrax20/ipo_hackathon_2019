@@ -1,6 +1,8 @@
 package de.java.hackathon.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity
@@ -37,19 +39,21 @@ public class RaspEntity {
         this.progress = progress;
     }
 
-    public String getStatus() { return status; }
+    public String getStatus() {
+        return status;
+    }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", progress='" + progress + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+    public String toString(String type) {
+        return "{" + "\"type\": " + '\"' + type + '\"' +
+                ", \"payload\": " + "{" +
+                "\"id\": " + id +
+                ", \"title\": \"" + title + '\"' +
+                ", \"progress\": \"" + progress + '\"' +
+                ", \"status\": \"" + status + '\"' +
+                "}}";
     }
 }
