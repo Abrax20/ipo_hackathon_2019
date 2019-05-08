@@ -1,6 +1,5 @@
 package de.java.hackathon.controller;
 
-import de.java.hackathon.entities.ConsumerEntity;
 import de.java.hackathon.entities.ConsumerRepo;
 import de.java.hackathon.entities.TestOneEntity;
 import de.java.hackathon.entities.TestOneRepo;
@@ -20,6 +19,8 @@ public class ConsumerController {
     private ConsumerRepo consumerRepo;
     @Autowired
     private TestOneRepo testOneRepo;
+    @Autowired
+    private WebSocketController webSocketController;
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
 
@@ -46,7 +47,10 @@ public class ConsumerController {
     @ResponseBody
     public TestOneEntity single(@PathVariable int id) {
         TestOneEntity entity = testOneRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(id)));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + id));
+
+        webSocketController.oneReceivedMessage(entity.toString());
+
         return entity;
     }
 

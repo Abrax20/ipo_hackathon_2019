@@ -1,24 +1,27 @@
 package de.java.hackathon.controller;
 
-import de.java.hackathon.model.Consumer;
+import de.java.hackathon.entities.TestOneEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @CrossOrigin
-@RequestMapping("/update")
+@RequestMapping("/rasp/update")
 public class PutController {
 
-    @PutMapping("/employees")
+    @Autowired
+    private  WebSocketController webSocketController;
+
+    @PutMapping("/process")
     @ResponseBody
-    public String replaceEmployee(@RequestBody Consumer newEmployee) {
-        Consumer employee = new Consumer();
+    public void replaceEmployee(@RequestBody TestOneEntity process) {
+        TestOneEntity testOneEntity = new TestOneEntity();
 
-        employee.setId(newEmployee.getId());
-        employee.setName(newEmployee.getName());
+        testOneEntity.setId(process.getId());
+        testOneEntity.setTitle(process.getTitle());
+        testOneEntity.setProgress(process.getProgress());
 
-        System.out.println(employee.toString());
-
-        return "Success";
+        webSocketController.oneReceivedMessage(process.toString());
     }
 }
