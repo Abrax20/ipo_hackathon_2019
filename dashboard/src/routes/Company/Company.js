@@ -1,12 +1,18 @@
-import React, { Component } from "react"
-import { Grid } from "./styled"
+import React, { Component } from "react";
+import { Grid } from "./styled";
 
-import PageWrapper from "./../../components/PageWrapper/PageWrapper"
-import { Box, WorldMap } from "grommet"
+import PageWrapper from "./../../components/PageWrapper/PageWrapper";
+import { Box, WorldMap } from "grommet";
+import { connect } from "react-redux";
+import { getAllProcesses } from "../../actions/api/process";
+import { ProcessOverview } from "../Process/ProcessOverview/ProcessOverview";
 
-export default class Company extends Component {
+export class Company extends Component {
   async componentDidMount() {
-    // const res = await fetch('http://192.168.178.25:8080/update/employees', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: 3, name: "Chris" })});
+    this.props.test();
+    const res = await fetch("http://192.168.178.25:8080/get/all", {
+      method: "GET"
+    });
   }
 
   render() {
@@ -35,6 +41,10 @@ export default class Company extends Component {
           />
         </Grid>
       </PageWrapper>
-    )
+    );
   }
 }
+export default connect(
+  null,
+  dispatch => ({ test: () => dispatch(getAllProcesses()) })
+)(Company);
