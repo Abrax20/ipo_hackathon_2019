@@ -8,8 +8,8 @@ export default async ({ dispatch }) => {
   const stompClient = Stomp.over(ws);
   stompClient.debug = null;
   stompClient.connect({}, function() {
-    stompClient.subscribe("/progress", action => {
-      console.log(action);
+    stompClient.subscribe("/progress", reqest => {
+      const action = JSON.parse(reqest.body)
       switch (action.type) {
         case "UPDATE_PROCESS": {
           dispatch(updateProccessFromSocket(action.payload));

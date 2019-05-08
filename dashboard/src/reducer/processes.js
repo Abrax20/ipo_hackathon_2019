@@ -8,14 +8,17 @@ import { UPDATE_PROCESS_FROM_SOCKET_ACTION } from "../actions/socket";
 export const initialState = {};
 export const processes = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_PROCESS_FROM_SOCKET_ACTION: {
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...(state[action.payload.id] || {}),
+          ...action.payload
+        }
+      };
+    }
     case SUCCESS_FETCH_ACTION: {
       switch (action.payload.type) {
-        case UPDATE_PROCESS_FROM_SOCKET_ACTION: {
-          return {
-            ...state,
-            [action.payload.id]: action.payload
-          };
-        }
         case FETCH_ALL_PROCESSES_ACTION: {
           const processes = {};
           action.payload.data.map(process => (processes[process.id] = process));
@@ -27,7 +30,10 @@ export const processes = (state = initialState, action) => {
         case FETCH_PROCESS_ACTION: {
           return {
             ...state,
-            [action.payload.data.id]: action.payload.data
+            [action.payload.data.id]: {
+              ...(state[action.payload.data.id] || {}),
+              ...action.payload.data
+            }
           };
         }
         default:
