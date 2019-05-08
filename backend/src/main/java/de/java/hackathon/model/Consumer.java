@@ -9,6 +9,8 @@ public class Consumer {
         this.name = name;
     }
 
+    public Consumer() {}
+
     public int getId() {
         return id;
     }
