@@ -2,20 +2,24 @@ package de.java.hackathon.controller;
 
 import de.java.hackathon.entities.ConsumerEntity;
 import de.java.hackathon.entities.ConsumerRepo;
+import de.java.hackathon.entities.TestOneEntity;
+import de.java.hackathon.entities.TestOneRepo;
 import de.java.hackathon.model.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/get")
 public class ConsumerController {
 
     @Autowired
     private ConsumerRepo consumerRepo;
+    @Autowired
+    private TestOneRepo testOneRepo;
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
 
@@ -26,16 +30,24 @@ public class ConsumerController {
         return consumer;
     }
 
-    @CrossOrigin
     @GetMapping("/consume")
     @ResponseBody
     public String consumer() {
         return "Viva la Banana";
     }
 
-    @GetMapping(path="/all")
+    @GetMapping(path = "/all")
     public @ResponseBody
-    Iterable<ConsumerEntity> getAllUsers() {
-        return consumerRepo.findAll();
+    Iterable<TestOneEntity> getAllUsers() {
+        return testOneRepo.findAll();
     }
+
+    @GetMapping(path = "/search/{id}")
+    @ResponseBody
+    public TestOneEntity single(@PathVariable int id) {
+        TestOneEntity entity = testOneRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(String.valueOf(id)));
+        return entity;
+    }
+
 }
