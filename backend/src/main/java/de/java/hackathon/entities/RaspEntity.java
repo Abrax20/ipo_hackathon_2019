@@ -42,4 +42,14 @@ public class RaspEntity {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", progress='" + progress + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

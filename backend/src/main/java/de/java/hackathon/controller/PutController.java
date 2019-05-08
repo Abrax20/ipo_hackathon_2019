@@ -16,12 +16,31 @@ public class PutController {
     @Autowired
     private RaspRepo raspRepo;
 
-    @PostMapping(path = "/process", consumes = "application/json", produces = "application/json")
+    @PutMapping(path = "/process", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public void replaceEmployee(@RequestBody RaspEntity process) {
+    public String replaceEmployee(@RequestBody RaspEntity process) {
+        RaspEntity newProcess = new RaspEntity();
 
-        raspRepo.save(setEntity(process));
-        webSocketController.oneReceivedMessage(process.toString());
+        raspRepo.findById(process.getId())
+                .map(employee -> {
+                    employee.setId(process.getId());
+                    employee.setTitle(process.getTitle());
+                    employee.setProgress(process.getProgress());
+                    employee.setStatus(process.getStatus());
+                    raspRepo.save(employee);
+                    webSocketController.oneReceivedMessage(process.toString());
+                    return "Update succeeded";
+                })
+                .orElseGet(() -> {
+                    newProcess.setId(process.getId());
+                    newProcess.setTitle(process.getTitle());
+                    newProcess.setProgress(process.getProgress());
+                    newProcess.setStatus(process.getStatus());
+                    raspRepo.save(newProcess);
+                    webSocketController.oneReceivedMessage(process.toString());
+                    return "New process added";
+                });
+        return "Success";
     }
 
     private RaspEntity setEntity(RaspEntity process) {
