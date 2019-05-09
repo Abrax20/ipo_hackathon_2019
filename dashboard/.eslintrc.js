@@ -11,6 +11,7 @@ module.exports = {
   rules: {
     'no-shadow': 0,
     'import/first': 0,
+    'react/sort-comp': 0,
     'no-return-assign': 0,
     'react/prop-types': 0,
     'no-param-reassign': 0,
