@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @CrossOrigin
 @RequestMapping("/rasp/update")
-public class PutController {
+public class RaspberryController {
 
     @Autowired
-    private  WebSocketController webSocketController;
+    private WebSocketController webSocketController;
     @Autowired
     private RaspRepo raspRepo;
 

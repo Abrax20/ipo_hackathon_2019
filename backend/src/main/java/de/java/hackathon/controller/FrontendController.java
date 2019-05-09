@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class FrontendController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    final String raspberryUrl = "http://192.168.178.21/controls/controlEngine.php";
+
    @PostMapping(path = "/process", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public void replaceEmployee(@RequestBody NewProcess newProcess) {
@@ -47,18 +50,20 @@ public class FrontendController {
                                 "VALUES (?, ?, ?)");
 
        int index = list.size() - 1;
+       int processID = list.get(index).getId();
        List<Step> steps = newProcess.getSteps();
-       int stepOne, stepTwo;
+       int stepOne;
 
        for (int j = 0; j < steps.size(); j++) {
            stepOne = steps.get(j).getId();
            if (j == (steps.size() - 1)) {
-               jdbcTemplate.update(sql, list.get(index).getId(), stepOne, null);
+               jdbcTemplate.update(sql, processID, stepOne, null);
            } else {
-               jdbcTemplate.update(sql, list.get(index).getId(), stepOne, steps.get(j + 1).getId());
-
+               jdbcTemplate.update(sql, processID, stepOne, steps.get(j + 1).getId());
            }
        }
+
+       sendGetToRasp(0, processID, 0);
     }
 
     @GetMapping("/actions")
@@ -98,5 +103,12 @@ public class FrontendController {
 
         webSocketController.oneReceivedMessage(entity.toString());
         return entity;
+    }
+
+    private void sendGetToRasp(int job, int process, int action) {
+        RestTemplate restTemplate = new RestTemplate();
+        String add = "?jobid=" + job + "&processid=" + process + "&actionid=" + action;
+        String result = restTemplate.getForObject(raspberryUrl + add, String.class);
+        System.out.println(result);
     }
 }
