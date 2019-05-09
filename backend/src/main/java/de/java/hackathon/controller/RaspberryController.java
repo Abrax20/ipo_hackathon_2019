@@ -17,6 +17,7 @@ public class RaspberryController {
     @Autowired
     private RaspRepo raspRepo;
 
+
     @PutMapping(path = "/process", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public String replaceEmployee(@RequestBody RaspEntity process) {
@@ -33,10 +34,13 @@ public class RaspberryController {
                     webSocketController.oneReceivedMessage(process.toString("UPDATE_PROCESS"));
                     return raspRepo.save(process);
                 });
-        System.out.println("Raspberry: " + process.getId() + " = " + process.getProgress() + "%");
+        System.out.println("Raspberry: [" + process.getId() + "] = " + process.getProgress() + "%");
         return "Success";
     }
 
+    private void sendMail() {
+
+    }
 
     private RaspEntity setEntity(RaspEntity process) {
         RaspEntity raspEntity = new RaspEntity();
