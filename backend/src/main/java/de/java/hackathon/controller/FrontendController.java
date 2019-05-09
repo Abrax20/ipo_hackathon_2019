@@ -27,6 +27,7 @@ public class FrontendController {
    @PostMapping(path = "/process", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public void replaceEmployee(@RequestBody String newProcess) {
+       DatabaseController databaseController
        System.out.println(newProcess);
     }
 
