@@ -33,8 +33,10 @@ public class RaspberryController {
                     webSocketController.oneReceivedMessage(process.toString("UPDATE_PROCESS"));
                     return raspRepo.save(process);
                 });
+        System.out.println("Raspberry: " + process.getId() + " = " + process.getProgress() + "%");
         return "Success";
     }
+
 
     private RaspEntity setEntity(RaspEntity process) {
         RaspEntity raspEntity = new RaspEntity();
