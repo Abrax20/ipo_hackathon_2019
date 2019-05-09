@@ -3,7 +3,6 @@ package de.java.hackathon.controller;
 import de.java.hackathon.entities.Actions;
 import de.java.hackathon.entities.Jobs;
 import de.java.hackathon.entities.Processes;
-import de.java.hackathon.entities.RaspEntity;
 import de.java.hackathon.entities.repo.ActionRepo;
 import de.java.hackathon.entities.repo.JobRepo;
 import de.java.hackathon.entities.repo.ProcessRepo;
@@ -25,20 +24,11 @@ public class FrontendController {
     @Autowired
     private JobRepo jobRepo;
 
-/*    @PostMapping(path = "/process", consumes = "application/json", produces = "application/json")
+   @PostMapping(path = "/process", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public void replaceEmployee(@RequestBody RaspEntity process) {
-*//*        RaspEntity testOneEntity = new RaspEntity();
-
-        testOneEntity.setId(process.getId());
-        testOneEntity.setTitle(process.getTitle());
-        testOneEntity.setProgress(process.getProgress());
-        testOneEntity.setStatus(process.getStatus());
-
-        testOneRepo.save(testOneEntity);
-
-        webSocketController.oneReceivedMessage(process.toString());*//*
-    }*/
+    public void replaceEmployee(@RequestBody String newProcess) {
+       System.out.println(newProcess);
+    }
 
     @GetMapping("/actions")
     @ResponseBody

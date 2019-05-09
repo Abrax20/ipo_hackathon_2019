@@ -16,6 +16,8 @@ public class Processes {
   private String progress;
   @Column(name = "status")
   private String status;
+  @Column(name = "title")
+  private String title;
 
 
   public int getId() {
@@ -26,6 +28,9 @@ public class Processes {
     this.id = pProcessId;
   }
 
+  public void setTitle(String title) { this.title = title; }
+
+  public String getTitle() { return title; }
 
   public String getProgress() {
     return progress;
@@ -48,6 +53,7 @@ public class Processes {
   public String toString() {
     return "Processes{" +
             "id=" + id +
+            "title=" + title +
             ", progress='" + progress + '\'' +
             ", status='" + status + '\'' +
             '}';
