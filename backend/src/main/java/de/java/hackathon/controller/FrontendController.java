@@ -8,6 +8,7 @@ import de.java.hackathon.entities.repo.JobRepo;
 import de.java.hackathon.entities.repo.ProcessRepo;
 import de.java.hackathon.model.NewProcess;
 import de.java.hackathon.model.ProcessesMapper;
+import de.java.hackathon.model.Step;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -36,16 +37,28 @@ public class FrontendController {
    @PostMapping(path = "/process", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public void replaceEmployee(@RequestBody NewProcess newProcess) {
-
        String sql = "INSERT INTO PROCESSES (PROGRESS, STATUS, TITLE) VALUES (?, ?, ?)";
        jdbcTemplate.update(sql, 0, "offen", newProcess.getTitle());
 
        List<Processes> list = jdbcTemplate.query("SELECT * FROM PROCESSES", new ProcessesMapper());
-       for (Processes p: list)
-           System.out.println(p.toString());
-       //processRepo.save(processes);
 
-       //ystem.out.println(processes);
+       sql = new String("INSERT INTO ACTION_PROCESS " +
+                                "(FK_PROCESS_ID, FK_ACTION_ID_NOW, FK_ACTION_ID_AFTER) " +
+                                "VALUES (?, ?, ?)");
+
+       int index = list.size() - 1;
+       List<Step> steps = newProcess.getSteps();
+       int stepOne, stepTwo;
+
+       for (int j = 0; j < steps.size(); j++) {
+           stepOne = steps.get(j).getId();
+           if (j == (steps.size() - 1)) {
+               jdbcTemplate.update(sql, list.get(index).getId(), stepOne, null);
+           } else {
+               jdbcTemplate.update(sql, list.get(index).getId(), stepOne, steps.get(j + 1).getId());
+
+           }
+       }
     }
 
     @GetMapping("/actions")
