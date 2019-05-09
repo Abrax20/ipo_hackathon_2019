@@ -1,8 +1,10 @@
 package de.java.hackathon.controller;
 
-import de.java.hackathon.entities.ConsumerRepo;
+import de.java.hackathon.entities.Actions;
+import de.java.hackathon.entities.repo.ActionRepo;
+import de.java.hackathon.entities.repo.ConsumerRepo;
 import de.java.hackathon.entities.RaspEntity;
-import de.java.hackathon.entities.RaspRepo;
+import de.java.hackathon.entities.repo.RaspRepo;
 import de.java.hackathon.model.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ public class ConsumerController {
     private ConsumerRepo consumerRepo;
     @Autowired
     private RaspRepo raspRepo;
+    @Autowired
+    private ActionRepo actionRepo;
     @Autowired
     private WebSocketController webSocketController;
     private static final String template = "Hello, %s!";
@@ -39,8 +43,8 @@ public class ConsumerController {
 
     @GetMapping(path = "/all")
     public @ResponseBody
-    Iterable<RaspEntity> getAllUsers() {
-        return raspRepo.findAll();
+    Iterable<Actions> getAllActions() {
+        return actionRepo.findAll();
     }
 
     @GetMapping(path = "/search/{id}")

@@ -1,12 +1,11 @@
 package de.java.hackathon.controller;
 
 import de.java.hackathon.entities.RaspEntity;
-import de.java.hackathon.entities.RaspRepo;
+import de.java.hackathon.entities.repo.RaspRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @Controller
 @CrossOrigin
