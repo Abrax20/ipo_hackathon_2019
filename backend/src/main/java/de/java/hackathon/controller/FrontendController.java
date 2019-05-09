@@ -6,9 +6,16 @@ import de.java.hackathon.entities.Processes;
 import de.java.hackathon.entities.repo.ActionRepo;
 import de.java.hackathon.entities.repo.JobRepo;
 import de.java.hackathon.entities.repo.ProcessRepo;
+import de.java.hackathon.model.NewProcess;
+import de.java.hackathon.model.ProcessesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @CrossOrigin
@@ -23,12 +30,22 @@ public class FrontendController {
     private ActionRepo actionRepo;
     @Autowired
     private JobRepo jobRepo;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
    @PostMapping(path = "/process", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public void replaceEmployee(@RequestBody String newProcess) {
-       DatabaseController databaseController
-       System.out.println(newProcess);
+    public void replaceEmployee(@RequestBody NewProcess newProcess) {
+
+       String sql = "INSERT INTO PROCESSES (PROGRESS, STATUS, TITLE) VALUES (?, ?, ?)";
+       jdbcTemplate.update(sql, 0, "offen", newProcess.getTitle());
+
+       List<Processes> list = jdbcTemplate.query("SELECT * FROM PROCESSES", new ProcessesMapper());
+       for (Processes p: list)
+           System.out.println(p.toString());
+       //processRepo.save(processes);
+
+       //ystem.out.println(processes);
     }
 
     @GetMapping("/actions")

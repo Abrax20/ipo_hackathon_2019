@@ -1,9 +1,6 @@
 package de.java.hackathon.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "processes")
@@ -11,6 +8,7 @@ public class Processes {
 
   @Id
   @Column(name = "p_process_id")
+  @GeneratedValue(strategy= GenerationType.IDENTITY)
   private int id;
   @Column(name = "progress")
   private String progress;
