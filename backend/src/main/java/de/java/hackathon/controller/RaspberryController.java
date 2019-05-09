@@ -1,10 +1,18 @@
 package de.java.hackathon.controller;
 
+import de.java.hackathon.components.EmailService;
 import de.java.hackathon.entities.RaspEntity;
 import de.java.hackathon.entities.repo.RaspRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.mail.PasswordAuthentication;
+import java.io.IOException;
+import java.util.Properties;
 
 
 @Controller
@@ -16,7 +24,6 @@ public class RaspberryController {
     private WebSocketController webSocketController;
     @Autowired
     private RaspRepo raspRepo;
-
 
     @PutMapping(path = "/process", consumes = "application/json", produces = "application/json")
     @ResponseBody
@@ -35,11 +42,11 @@ public class RaspberryController {
                     return raspRepo.save(process);
                 });
         System.out.println("Raspberry: [" + process.getId() + "] = " + process.getProgress() + "%");
+        if (process.getProgress().equalsIgnoreCase("100")) {
+            EmailService service = new EmailService();
+            service.sendSimpleEmail();
+        }
         return "Success";
-    }
-
-    private void sendMail() {
-
     }
 
     private RaspEntity setEntity(RaspEntity process) {
