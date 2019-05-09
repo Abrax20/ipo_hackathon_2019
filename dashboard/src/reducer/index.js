@@ -1,6 +1,12 @@
-import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { combineReducers } from "redux";
+import { connectRouter } from "connected-react-router";
 
-export default combineReducers({
-  router: routerReducer,
-});
+import actions from "./actions";
+import processes from "./processes";
+
+export default history =>
+  combineReducers({
+    actions,
+    processes,
+    router: connectRouter(history)
+  });
