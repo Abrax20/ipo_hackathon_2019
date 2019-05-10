@@ -40,7 +40,7 @@ public class RaspberryController {
 
         int pro = Integer.parseInt(process.getProgress());
 
-        if (pro % 20 == 0) {
+        if (pro % 10 == 0) {
             service.sendSimpleEmail();
         }
         return "Success";
