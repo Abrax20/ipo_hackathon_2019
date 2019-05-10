@@ -33,7 +33,7 @@ public class FrontendController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    final String raspberryUrl = "http://192.168.178.21/controls/controlEngine.php";
+    final String raspberryUrl = "http://192.168.178.44/controls/controlEngine.php";
 
    @PostMapping(path = "/process", consumes = "application/json", produces = "application/json")
     @ResponseBody
